@@ -9,8 +9,15 @@ def main():
     # Uncomment this to pass the first stage
     #
     server = socket.create_server(("localhost", 9092), reuse_port=True)
-    server.accept() # wait for client
+    conn, addr = server.accept() # wait for client
 
+    with conn:
+        print(f"Connected from {addr}")
+        while True:
+            data = sock.recv(10)
+            print data, 'EOF'
+        hardcoded_message_id = byte_var = bytes([0x00, 0x00, 0x00, 0x07])
+        conn.sendall(hardcoded_message_id)
 
 if __name__ == "__main__":
     main()
