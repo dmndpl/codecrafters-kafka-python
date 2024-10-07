@@ -14,7 +14,7 @@ def main():
     with conn:
         print(f"Connected from {addr}")
         while True:
-            data = sock.recv(38)
+            data = sock.recv(4)
             print(data, 'EOF')
         
 
