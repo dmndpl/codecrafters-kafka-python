@@ -19,7 +19,7 @@ def main():
         
 
         hardcoded_message_id = byte_var = bytes([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x07])
-        conn.sendall(hardcoded_message_id)
+        conn.send(hardcoded_message_id)
 
 if __name__ == "__main__":
     main()
