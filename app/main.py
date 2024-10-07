@@ -13,11 +13,10 @@ def main():
 
     with conn:
         print(f"Connected from {addr}")
-        '''
         while True:
-            data = sock.recv(10)
+            data = sock.recv(4)
             print(data, 'EOF')
-        '''
+        
 
         hardcoded_message_id = byte_var = bytes([0x00, 0x00, 0x00, 0x07])
         conn.sendall(hardcoded_message_id)
