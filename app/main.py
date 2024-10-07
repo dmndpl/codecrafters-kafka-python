@@ -64,22 +64,6 @@ class ApiVersionsResponseV4():
     def __str__(self):
        return str(self.to_bytes())
 
-def create_api_version_response(request: ApiVersionRequestV4):
-    header = request.correlation_id.to_bytes(4)
-
-    min_version, max_version = 0, 4
-
-    status_code = 0 if min_version <= request.api_version <= max_version else 35
-
-    THROTTLE_TIME_MS = 0
-    NUM_API_KEYS = 2
-    TAG_BUFFER = int(0).to_bytes(1, byteorder="big")
-
-    body = status_code.to_bytes(2) + NUM_API_KEYS.to_bytes(1) + request.api_key.to_bytes(2) + min_version.to_bytes(2) + max_version.to_bytes(2) + TAG_BUFFER + THROTTLE_TIME_MS.to_bytes(4) + TAG_BUFFER
-
-    message_length = (len(header) + len(body)).to_bytes(4)
-    return message_length + header + body
-
 def main():
     print("Logs from your program will appear here!")
 
@@ -92,7 +76,6 @@ def main():
             data = conn.recv(2048)
             print(data, 'EOF')
             req = ApiVersionRequestV4(data)
-            print(req)
             response = ApiVersionsResponseV4.from_requestV4(req)
             conn.sendall(response.to_bytes())
 
