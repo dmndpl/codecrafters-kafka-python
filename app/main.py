@@ -21,8 +21,18 @@ def main():
             print(f"Connected from {addr}")
             data = conn.recv(1024)
             print(data, 'EOF')
+            data = data[4:]
+            req_api_key_bytes = data[0:2]
+            req_api_key = int.from_bytes(req_api_key_bytes, byteorder="big")
+            print(req_api_key)
+            req_api_version_bytes = data[2:4]
+            req_api_version = int.from_bytes(req_api_version_bytes, byteorder="big")
+            print(req_api_version)
+            correlation_id_bytes = data[4:8]
+            correlation_id = int.from_bytes(correlation_id_bytes, byteorder="big")
+            print(correlation_id)
             
-            conn.sendall(create_api_version_response(7))
+            conn.sendall(create_api_version_response(correlation_id))
 
 if __name__ == "__main__":
     main()
